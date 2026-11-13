@@ -2,9 +2,23 @@
 
 **Explainable Loan Approval & Credit Risk Prediction**
 
-CreditWise AI is an end-to-end Data Science portfolio project that predicts loan-approval probability and explains the factors influencing each prediction. It combines leakage-safe preprocessing, feature engineering, model comparison, XGBoost, SHAP explainability, threshold analysis, and a Streamlit inference application.
+CreditWise AI is an end-to-end Data Science portfolio project that predicts loan-approval probability and explains the factors influencing each prediction. It is designed to demonstrate how ML can assist a loan officer's decision process — not replace human judgement — by combining leakage-safe preprocessing, feature engineering, model comparison, XGBoost, SHAP explainability, threshold analysis, and a Streamlit inference application.
 
 > **Educational project only.** CreditWise is not intended or validated for real credit underwriting or financial decision-making.
+
+## Dataset
+
+The project uses the **Loan Approval Prediction** dataset, a structured tabular dataset of loan applications with applicant demographic, financial, and credit-history features.
+
+| Property | Detail |
+|---|---|
+| Source | Kaggle — Loan Approval Prediction |
+| Records | ~615 labelled loan applications |
+| Target | `Loan_Approved` (binary: Approved / Rejected) |
+| Class balance | ~68% Approved / ~32% Rejected |
+| Key features | Applicant income, co-applicant income, loan amount, loan term, credit history, employment status, education, dependents, collateral value, savings, DTI ratio |
+
+The dataset represents historical approval decisions and is used solely for ML experimentation.
 
 ## Demo
 
@@ -131,6 +145,16 @@ The saved tuned artifact reports approximately **0.991 training cross-validation
 
 The distinction is intentional: tuning was evaluated rather than presented as an automatic improvement.
 
+### Classification report (baseline XGBoost, default threshold 0.50)
+
+|  | Precision | Recall | F1-Score | Support |
+|---|---:|---:|---:|---:|
+| Rejected | 0.97 | 0.91 | 0.94 | 37 |
+| Approved | 0.95 | 0.99 | 0.97 | 86 |
+| **Weighted avg** | **0.96** | **0.96** | **0.96** | **123** |
+
+> At the cost-aware threshold (0.82), precision on approvals rises further — reducing false approvals at the cost of a higher false-rejection rate. See the notebook for the full threshold-sweep analysis.
+
 ## Technology
 
 **Data Science:** Python, pandas, NumPy, scikit-learn, XGBoost  
@@ -166,8 +190,8 @@ creditwise/
 ## Run locally
 
 ```bash
-git clone <YOUR-REPOSITORY-URL>
-cd creditwise
+git clone https://github.com/vinayakbhat19/creditwiseAI.git
+cd creditwiseAI
 
 python3 -m venv .venv
 source .venv/bin/activate
